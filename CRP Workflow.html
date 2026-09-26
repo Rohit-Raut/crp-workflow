@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A week at the Yale CRP assembly site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF1F4;--card:#FFFFFF;--ink:#1B2430;--muted:#5C6876;--rule:#D8DEE4;--floor:#F7F8FA;--wall:#2E3844;--tent:#E3EDD5;--tentline:#9DB57F;
+  --table:#C9D2DB;--tableline:#7E8B98;--zone:#E1562B;--night:#1D2B4A;--accent:#1B2430;--focus:#2F6FD1;
+  --font:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11161C;--card:#1A2129;--ink:#E7ECF1;--muted:#9EABB8;--rule:#2C3640;--floor:#222B34;--wall:#B7C2CD;--tent:#2C3A26;--tentline:#6F8C55;--table:#3A4652;--tableline:#8896A4;--accent:#E7ECF1;--focus:#80AEF5}}
+:root[data-theme="dark"]{--bg:#11161C;--card:#1A2129;--ink:#E7ECF1;--muted:#9EABB8;--rule:#2C3640;--floor:#222B34;--wall:#B7C2CD;--tent:#2C3A26;--tentline:#6F8C55;--table:#3A4652;--tableline:#8896A4;--accent:#E7ECF1;--focus:#80AEF5}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45}
+.wrap{max-width:1500px;margin:0 auto;padding:26px 20px 56px}
+h1{font-size:32px;line-height:1.1;font-weight:800;margin:0 0 6px;letter-spacing:-.015em}
+.lead{color:var(--muted);margin:0 0 18px;max-width:75ch;font-size:17px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+/* nav */
+.nav{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-bottom:12px}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.days button{border:1px solid var(--rule);background:var(--card);padding:8px 16px;border-radius:999px;font-weight:700}
+.days button[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.stepbtns{display:flex;gap:6px;align-items:center}
+.stepbtns button{border:1px solid var(--rule);background:var(--card);border-radius:10px;padding:8px 14px;font-weight:700}
+.stepbtns .play{min-width:92px}
+/* stage */
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:18px}
+.planwrap{padding:14px 14px 8px}
+.now{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;padding:4px 6px 8px}
+.when{font-size:14px;color:var(--muted);font-weight:700}
+.headline{font-size:22px;font-weight:800;line-height:1.2;margin:2px 0 0;max-width:46ch}
+.count{text-align:right}
+.count b{font-size:34px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
+.count span{display:block;font-size:13px;color:var(--muted);max-width:190px;margin-left:auto}
+svg.plan{width:100%;height:auto;display:block}
+.side{padding:16px 16px 10px;display:flex;flex-direction:column;gap:2px;max-height:none}
+.side h2{font-size:17px;margin:0 0 6px}
+.task{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--rule)}
+.task:first-of-type{border-top:0}
+.zl{width:26px;height:26px;border-radius:6px;background:var(--zone);color:#fff;font-weight:800;display:grid;place-items:center;font-size:14px}
+.zl.desk{background:#6B7785}
+.task .t{font-weight:700;line-height:1.25}
+.task .m{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.pill{display:inline-block;min-width:32px;text-align:center;border-radius:6px;padding:1px 6px;font-weight:800;font-size:13px;color:#1B2430;border:1px solid rgba(0,0,0,.12)}
+.mini{display:inline-flex;gap:1px}
+.mini svg{width:16px;height:24px}
+.moves{font-size:13.5px;color:var(--muted);padding:8px 0 0;border-top:1px dashed var(--rule)}
+/* timeline */
+.tl{margin-top:16px;padding:14px 16px}
+.tl h2,.journey h2{font-size:17px;margin:0 0 4px}
+.tl p,.journey p.note{margin:0 0 12px;color:var(--muted);font-size:14.5px}
+.tlrow{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.tlday{flex:1 0 auto}
+.tlday .dn{font-weight:800;font-size:14px;margin-bottom:4px}
+.tlhalfs{display:flex;gap:6px}
+.tlhalf{display:flex;flex-direction:column;gap:3px}
+.tlhalf .hn{font-size:12px;color:var(--muted)}
+.tlcells{display:flex;gap:3px}
+.cell{width:34px;height:64px;border:1px solid var(--rule);background:var(--floor);border-radius:8px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:3px 0;position:relative;overflow:hidden}
+.cell .bar{position:absolute;left:5px;right:5px;bottom:18px;background:#8C9AA8;border-radius:3px 3px 0 0}
+.cell .n{font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;position:relative}
+.cell[aria-current="true"]{border:2px solid var(--accent);background:var(--card)}
+.cell[aria-current="true"] .bar{background:var(--accent)}
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-size:13.5px;padding:6px 6px 2px;color:var(--ink)}
+.legend .k{display:inline-flex;align-items:center;gap:6px}
+.legend svg{height:26px;width:auto}
+.swatch{display:inline-block;width:26px;height:12px;border-radius:3px}
+/* journey */
+.journey{margin-top:16px;padding:16px}
+.weeks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.wk{border:1px solid var(--rule);border-radius:14px;padding:12px;background:var(--floor)}
+.wk h3{margin:0 0 8px;font-size:15px}
+.wk h3 small{font-weight:600;color:var(--muted)}
+.stagebtn{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid transparent;background:none;padding:6px 6px;border-radius:8px}
+.stagebtn:hover{background:var(--card);border-color:var(--rule)}
+.stagebtn .d{font-size:12.5px;color:var(--muted);min-width:34px;font-weight:700}
+.slabkey{display:inline-block;width:30px;height:12px;border-radius:3px;flex:none}
+/* svg classes */
+.floor{fill:var(--floor)}
+.wall{fill:none;stroke:var(--wall);stroke-width:6}
+.tent{fill:var(--tent);stroke:var(--tentline);stroke-width:1.5}
+.tbl{fill:var(--table);stroke:var(--tableline);stroke-width:1.2}
+.tbl.on{stroke-width:3.5}
+.lbl{fill:var(--muted);font-size:12px;font-weight:700;font-family:var(--font)}
+.lbl.big{font-size:13.5px;fill:var(--ink)}
+.zbox{fill:var(--zone)}
+.ztxt{fill:#fff;font-weight:800;font-size:14px;font-family:var(--font)}
+.slab{transition:transform .8s cubic-bezier(.4,0,.2,1),opacity .5s}
+.slab text{font-size:11.5px;font-weight:800;font-family:var(--font)}
+.fig{animation:pop .45s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.mv{fill:none;stroke-width:3;stroke-dasharray:7 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-26}}
+.tagtxt{font-size:11.5px;font-weight:800;font-family:var(--font)}
+.nightveil{fill:var(--night);opacity:0;transition:opacity .6s;pointer-events:none}
+.night .nightveil{opacity:.28}
+@media (prefers-reduced-motion: reduce){.slab,.nightveil{transition:none}.fig{animation:none}.mv{animation:none}}
+@media (max-width:1100px){.stage{grid-template-columns:1fr}.weeks{grid-template-columns:1fr}}
+@media (max-width:640px){.now{grid-template-columns:1fr}.count{text-align:left}.count span{margin-left:0;max-width:none}.planwrap{padding:10px 6px 6px}h1{font-size:25px}.wrap{padding:16px 12px 40px}.headline{font-size:18px}.count b{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>A week at the Yale CRP assembly site</h1>
+  <p class="lead">Step through a normal week. The map is the real site layout from the workflow slides; each figure is a person, each colored slab is a charge readout unit (CRU) moving through the site.</p>
+
+  <div class="nav">
+    <div class="days" id="days" role="group" aria-label="Day"></div>
+    <div class="stepbtns">
+      <button id="prev" aria-label="Previous step">◀ Back</button>
+      <button id="next" aria-label="Next step">Next ▶</button>
+      <button id="play" class="play">Play week</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="card planwrap" id="planwrap">
+      <div class="now">
+        <div><div class="when" id="when"></div><p class="headline" id="headline"></p></div>
+        <div class="count"><b id="cnt">5</b><span id="cntsub">people on site</span></div>
+      </div>
+      <svg class="plan" id="plan" viewBox="0 0 1200 540" role="img" aria-labelledby="headline"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside class="card side" aria-live="polite">
+      <h2>Who is doing what right now</h2>
+      <div id="list"></div>
+    </aside>
+  </div>
+
+  <div class="card tl">
+    <h2>The whole week, step by step</h2>
+    <p>Each box is one step of the day. The bar and number show how many people the planning sheet asks for. Click any box to jump there.</p>
+    <div class="tlrow" id="tl"></div>
+  </div>
+
+  <div class="card journey">
+    <h2>Why three generations of CRUs are on site at once</h2>
+    <p class="note">Building, cold testing and packing one CRU takes three weeks. So every week the team builds two new CRUs (A and B), tests last week's pair (A′, B′) and packs the pair from two weeks ago (A″, B″). Follow CRU A through its three weeks; click a stage to see it on the map.</p>
+    <div class="weeks" id="weeks"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- colors from the team's planning sheet (headcount) ---------- */
+const HC={0.5:"#CCCCCC",1:"#A4C2F4",1.5:"#3C78D8",2:"#FFE599",2.5:"#F1C232",3:"#93C47D",3.5:"#38761D",4:"#DD7E6B",4.5:"#85200C"};
+const HCDARK=new Set([1.5,3.5,4.5]);
+/* ---------- time steps (from the Baseline_gas schedule shown on slide 4) ---------- */
+const S=[
+ ["Monday","Morning",1,3],["Monday","Morning",2,3],["Monday","Morning",3,3],["Monday","Afternoon",1,2],["Monday","Afternoon",2,2],
+ ["Tuesday","Morning",1,3],["Tuesday","Morning",2,3],["Tuesday","Morning",3,3],["Tuesday","Afternoon",1,2],["Tuesday","Afternoon",2,2],
+ ["Wednesday","Morning",1,3],["Wednesday","Morning",2,3],["Wednesday","Morning",3,3],["Wednesday","Afternoon",1,3],["Wednesday","Afternoon",2,3],["Wednesday","Afternoon",3,3],
+ ["Wednesday","Evening",1,3],["Wednesday","Evening",2,3],["Wednesday","Evening",3,3],
+ ["Thursday","Morning",1,3],["Thursday","Morning",2,3],["Thursday","Morning",3,3],["Thursday","Afternoon",1,2],["Thursday","Afternoon",2,2],
+ ["Friday","Morning",1,2],["Friday","Morning",2,2],["Friday","Afternoon",1,2],["Friday","Afternoon",2,2]
+].map(([day,half,k,n])=>({day,half,k,n,time:{Morning:"8:00–12:00",Afternoon:"13:00–17:00",Evening:"17:00–22:00"}[half]}));
+const HEAD=[
+ "CRU A's build starts, while last week's CRU B is loaded into the cold box.",
+ "CRU A's anode stack is flipped over on the rotation table.",
+ "All hands: CRU A rolls to the frame tent and gets its composite frame.",
+ "Back in the main tent, CRU A gets edge cards. Last week's CRU A moves from the rack into the cold box.",
+ "Cold electronics go onto CRU A. The cold box now holds last week's pair.",
+ "CRU A gets its warm electronics test. The cold box lid is closed.",
+ "The CRU A from two weeks ago is packed into its shipping crate.",
+ "Crating continues while the cold box runs a warm test.",
+ "The cold box starts its overnight purge. The CRU B from two weeks ago is crated.",
+ "Crating wraps up; the packed crates go to storage.",
+ "The cold box starts filling. The team cleans up, logs data and unpacks new anodes.",
+ "Filling continues. New anodes are unpacked and cleaned.",
+ "CRU B's frame is prepared: copper ground plane.",
+ "Frame prep continues with cables and adapter plates. New frames are unpacked.",
+ "Filling finishes.",
+ "Cold test of last week's two CRUs. The team catches up on database entries.",
+ "Evening: one person stays with the cold test.",
+ "Evening: the cold liquid is boiled off.",
+ "Evening: the cold box is purged.",
+ "CRU A moves to the untested rack. CRU B's build starts.",
+ "CRU B's anode stack is flipped. Second warm test in the cold box.",
+ "All hands: CRU B gets its composite frame in the frame tent.",
+ "CRU B gets edge cards. The frame prep table is set up for next week.",
+ "Cold electronics go onto CRU B.",
+ "CRU B gets its warm test. The tested CRUs come out of the cold box.",
+ "Next week's frame is prepared. Tested CRUs go onto the tested rack.",
+ "Frame prep continues; results go into the database.",
+ "CRU B is readied for the cold box next Monday. The cold box is cleaned."
+];
+/* ---------- stations on the map ---------- */
+const ST={
+ rot:{zone:"D",name:"Main tent, rotation table",crew:[326,430],tbl:"t_rot"},
+ lift:{zone:"D",name:"Main tent, lift table",crew:[436,430],tbl:"t_lift"},
+ cfinst:{zone:"C",name:"Frame tent, frame install",crew:[50,430],tbl:"t_cfinst"},
+ cfprep:{zone:"C",name:"Frame tent, frame prep table",crew:[180,430],tbl:"t_cfprep"},
+ bench:{zone:"A",name:"Parts & prep area, work bench",crew:[552,430],tbl:"t_bench"},
+ anodes:{zone:"A",name:"Parts & prep area",crew:[552,430],tbl:"t_anodes"},
+ cfstore:{zone:"B",name:"Frame storage",crew:[322,190],tbl:"t_cfstore"},
+ crate:{zone:"G",name:"Packing area",crew:[462,238],tbl:"t_pack"},
+ cb:{zone:"F",name:"Cold box",crew:[996,236],tbl:"t_cb"},
+ desk:{zone:"",name:"Database laptop",crew:[60,186],tbl:"t_desk"}
+};
+/* ---------- tasks: [first step, last step, station, people (sheet value), plain name, pose, sheet label] ---------- */
+const T=[
+ [0,0,"rot",2,"Build CRU A's anode stack","work","CRPa: anode stack build"],
+ [0,0,"bench",0.5,"Get adapter boards & jumpers ready for CRU A","work","CRPa: Prep. AB + Jumpers"],
+ [0,1,"cb",2.5,"Load last week's CRU B into the cold box and wire it up","move","Insert CRPb'"],
+ [1,1,"rot",2,"Flip CRU A's anode stack on the rotation table","lift","CRPa: anode stack rotation"],
+ [1,1,"cfinst",0.5,"Lift CRU A's frame with the gantry crane","lift","CRPa: Lift CF with Gantry"],
+ [2,2,"cfinst",4,"Install the composite frame on CRU A","lift","CRPa: CF install"],
+ [2,2,"bench",1,"Prepare BDE cables","work","CRPa: Prepare BDE"],
+ [3,3,"lift",1,"Tighten CRU A's frame","work","CRPa: CF tighten"],
+ [3,3,"lift",1.5,"Fit edge cards & filter boxes on CRU A","work","CRPa: EC install"],
+ [3,4,"cb",2.5,"Move last week's CRU A from the rack into the cold box","move","Insert CRPa'"],
+ [4,4,"lift",2,"Install the cold electronics on CRU A","work","CRPa: CE install"],
+ [5,6,"lift",1,"Warm electronics test on CRU A","laptop","CE Warm Test CRPa"],
+ [5,5,"cb",2,"Close the cold box lid","lift","Close Cold Box"],
+ [5,5,"crate",1.5,"Get the shipping crate ready","work","Crate Prep"],
+ [5,5,"desk",0.5,"Log results in the hardware database","laptop","CRP Entry"],
+ [6,7,"cb",1,"Warm test of last week's pair in the cold box","laptop","Warm Testing"],
+ [6,7,"crate",3,"Pack the CRU A from two weeks ago into its crate","lift","Crate CRPa''"],
+ [8,9,"cb",1,"Purge the cold box (runs overnight)","laptop","Purge (overnight)"],
+ [8,9,"crate",3,"Pack the CRU B from two weeks ago into its crate","lift","Crate CRPb''"],
+ [10,10,"rot",1,"Clean the main tent for the next build","clean","Clean/Prep for next assembly"],
+ [10,14,"cb",1,"Fill the cold box","laptop","Fill Coldbox"],
+ [10,11,"desk",1,"Log results in the hardware database","laptop","CRP Entry"],
+ [10,12,"anodes",2,"Unpack and clean new anodes","clean","Unpacking anode"],
+ [12,12,"cfprep",2,"Prepare CRU B's frame: copper ground plane","work","CRPb: CF ground plane install"],
+ [13,14,"cfprep",2,"Prepare CRU B's frame: cables & adapter plates","work","CRPb: CF BDE cables and adapter plates"],
+ [13,15,"cfstore",2,"Unpack and clean new composite frames","clean","Unpacking/cleaning CF"],
+ [15,16,"cb",1,"Cold test of last week's pair","laptop","Cold Testing"],
+ [15,15,"desk",2,"Catch up on database entries","laptop","Extra/Make-up Entry"],
+ [17,17,"cb",1,"Boil off the cold liquid","laptop","Boil-Off"],
+ [18,18,"cb",1,"Purge the cold box","laptop","Purge"],
+ [19,19,"rot",2,"Build CRU B's anode stack","work","CRPb: anode stack build"],
+ [19,19,"bench",1,"Get adapter boards & jumpers ready for CRU B","work","CRPb: Prep. AB + Jumpers"],
+ [19,19,"cb",1,"Finish the purge","laptop","Finish Purge"],
+ [19,19,"desk",0.5,"Log results in the hardware database","laptop","CRP Entry"],
+ [20,20,"rot",2,"Flip CRU B's anode stack on the rotation table","lift","CRPb: anode stack rotation"],
+ [20,20,"bench",1,"Prepare BDE cables","work","CRPb: Prepare BDE"],
+ [20,20,"cfinst",0.5,"Lift CRU B's frame with the gantry crane","lift","CRPb: Lift CF with Gantry"],
+ [20,21,"cb",1,"Second warm test of last week's pair","laptop","Warm Testing"],
+ [21,21,"cfinst",4,"Install the composite frame on CRU B","lift","CRPb: CF install"],
+ [22,22,"lift",1,"Tighten CRU B's frame","work","CRPb: CF tighten"],
+ [22,22,"lift",1.5,"Fit edge cards & filter boxes on CRU B","work","CRPb: EC install"],
+ [22,23,"cfprep",1,"Set up the frame prep table","clean","CF-Prep Table Prep"],
+ [22,23,"desk",1,"Log results in the hardware database","laptop","CRP Entry"],
+ [23,23,"lift",2,"Install the cold electronics on CRU B","work","CRPb: CE install"],
+ [24,24,"rot",1,"Clean the main tent for the next build","clean","Clean/Prep for next assembly"],
+ [24,24,"lift",1,"Warm electronics test on CRU B","laptop","CE Warm Test CRPb"],
+ [24,26,"cb",2.5,"Move the tested pair from the cold box to the tested rack","move","Remove CRPa' & CRPb'"],
+ [25,25,"cfprep",2,"Prepare next week's frame: copper ground plane","work","CRPa*: CF ground plane install"],
+ [26,27,"cfprep",2,"Prepare next week's frame: cables & adapter plates","work","CRPa*: CF BDE cables and adapter plates"],
+ [26,26,"desk",0.5,"Log results in the hardware database","laptop","CRP Entry"],
+ [27,27,"lift",1,"Get CRU B ready for the cold box","work","Prepare CRPb for insertion"],
+ [27,27,"cb",2,"Clean the cold box","clean","Clean coldbox"]
+].map(([a,b,st,p,name,pose,orig])=>({a,b,st,p,name,pose,orig}));
+/* ---------- places for CRUs and frames ---------- */
+const P={D_rot:[374,466],D_lift:[484,466],C_inst:[108,466],C_prep:[234,466],E_un1:[695,458],E_un2:[695,486],E_t1:[785,458],E_t2:[785,486],
+ F1:[1040,108],F2:[1110,108],G:[535,118],H1:[905,388],H2:[905,418],H3:[995,388],H4:[995,418],off:[-120,300]};
+/* per-step location of each object (28 steps) */
+function track(spec){const out=[];let cur="off";for(let i=0;i<28;i++){if(spec[i]!==undefined)cur=spec[i];out.push(cur)}return out}
+const OBJ=[
+ {id:"A",label:"A",gen:0,fam:"A",pos:track({0:"D_rot",2:"C_inst",3:"D_lift",19:"E_un1"})},
+ {id:"B",label:"B",gen:0,fam:"B",pos:track({0:"off",19:"D_rot",21:"C_inst",22:"D_lift"})},
+ {id:"A1",label:"A′",gen:1,fam:"A",pos:track({0:"E_un1",3:"F2",24:"E_t1"})},
+ {id:"B1",label:"B′",gen:1,fam:"B",pos:track({0:"D_lift",1:"F1",25:"E_t2"})},
+ {id:"A2",label:"A″",gen:2,fam:"A",pos:track({0:"E_t1",6:"G",8:"H3"})},
+ {id:"B2",label:"B″",gen:2,fam:"B",pos:track({0:"E_t2",8:"G",10:"H4"})},
+ {id:"fA",label:"frame",gen:3,fam:"F",pos:track({0:"C_inst",2:"off"})},
+ {id:"fB",label:"frame",gen:3,fam:"F",pos:track({0:"off",12:"C_prep",20:"C_inst",21:"off"})},
+ {id:"fA2",label:"frame",gen:3,fam:"F",pos:track({0:"off",25:"C_prep"})}
+];
+const FILL={A:["#5E3FA0","#9A84CC","#D3C8EA"],B:["#A0336C","#D07FAA","#EDC4DA"]};
+/* moves drawn as arrows: [step, object, from, to] */
+const MOVES=[[0,"B1","D_lift","F1","Last week's CRU B: main tent → cold box"],[3,"A1","E_un1","F2","Last week's CRU A: untested rack → cold box"],
+ [2,"A","D_rot","C_inst","CRU A rolls on the lift table to the frame tent"],[3,"A","C_inst","D_lift","CRU A rolls back to the main tent"],
+ [6,"A2","E_t1","G","Two-week-old CRU A: tested rack → packing"],[8,"B2","E_t2","G","Two-week-old CRU B: tested rack → packing"],[8,"A2","G","H3","Crate → packed storage"],[10,"B2","G","H4","Crate → packed storage"],
+ [19,"A","D_lift","E_un1","CRU A: main tent → untested rack"],[21,"B","D_rot","C_inst","CRU B rolls to the frame tent"],[22,"B","C_inst","D_lift","CRU B rolls back to the main tent"],
+ [24,"A1","F2","E_t1","Tested CRU A′: cold box → tested rack"],[25,"B1","F1","E_t2","Tested CRU B′: cold box → tested rack"]];
+/* ---------- person drawing ---------- */
+const TONES=["#F1C7A5","#C68E63","#8D5A3B","#E6B48A","#5C3A26"];
+const ARMS={
+ work:"M10 18 Q6 23 9 29 M20 18 Q24 23 21 29",
+ lift:"M10 18 L5 9 M20 18 L25 9",
+ move:"M11 18 Q17 23 27 21 M19 18 Q24 22 28 24",
+ laptop:"M10 18 Q9 24 13 25 M20 18 Q21 24 17 25",
+ clean:"M10 18 L7 28 M20 18 Q25 21 28 25",
+ watch:"M10 18 Q14 25 20 22 M20 18 Q16 25 10 22"
+};
+function person(x,y,pose,standby,tone,scale=1){
+  const legs="M12.5 30 L11.5 43 M17.5 30 L18.5 43";
+  const tr=`translate(${x-15*scale},${y-44*scale}) scale(${scale})`;
+  if(standby){
+    return `<g transform="${tr}" class="sb"><g fill="none" stroke="#7B8794" stroke-width="1.8" stroke-dasharray="3 2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="${legs}"/><path d="M9 16 Q15 13 21 16 L20 31 L10 31 Z"/><path d="${ARMS.watch}"/><circle cx="15" cy="8" r="6"/></g></g>`;
+  }
+  const extra = pose==="laptop"?`<rect x="10" y="21.5" width="10" height="6.5" rx="1" fill="#2B3440"/><rect x="11" y="22.5" width="8" height="4" fill="#9FD0F0"/>`
+             : pose==="clean"?`<rect x="25.5" y="23.5" width="5" height="4" rx="1" fill="#6FB6A5"/>`:"";
+  return `<g transform="${tr}">
+   <path d="${legs}" stroke="#26303B" stroke-width="5.6" stroke-linecap="round" fill="none"/>
+   <path d="${legs}" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+   <path d="${ARMS[pose]}" stroke="#26303B" stroke-width="5.2" stroke-linecap="round" fill="none"/>
+   <path d="M9 16 Q15 13 21 16 L20.5 31 L9.5 31 Z" fill="#FFFFFF" stroke="#26303B" stroke-width="1.5" stroke-linejoin="round"/>
+   <path d="${ARMS[pose]}" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+   <circle cx="15" cy="8" r="6" fill="${tone}" stroke="#26303B" stroke-width="1.2"/>
+   <path d="M8.8 7.2 A6.2 6.2 0 0 1 21.2 7.2 Q15 5 8.8 7.2 Z" fill="#7FB0D0" stroke="#26303B" stroke-width="1"/>
+   ${extra}</g>`;
+}
+function miniPeople(p,pose){const n=Math.floor(p);let h="";for(let i=0;i<n;i++)h+=`<svg viewBox="0 0 30 44">${person(15,44,pose,false,TONES[i%5])}</svg>`;if(p%1)h+=`<svg viewBox="0 0 30 44">${person(15,44,"watch",true)}</svg>`;return `<span class="mini">${h}</span>`}
+function words(p){const n=Math.floor(p),h=p%1!==0;return (n?`${n} working`:"")+(h?(n?" + 1 standby":"1 checking in / standby"):"")}
+/* ---------- static map ---------- */
+function mapBase(){
+ const tbl=(id,x,y,w,h,label,lx,ly)=>`<rect id="${id}" class="tbl" x="${x}" y="${y}" width="${w}" height="${h}" rx="4"/>${label?`<text class="lbl" x="${lx??x+w/2}" y="${ly??y+h+15}" text-anchor="middle">${label}</text>`:""}`;
+ const z=(L,x,y)=>`<rect class="zbox" x="${x}" y="${y}" width="24" height="24" rx="4"/><text class="ztxt" x="${x+12}" y="${y+17}" text-anchor="middle">${L}</text>`;
+ return `
+ <rect class="floor" x="20" y="30" width="1160" height="490" rx="6"/>
+ <rect class="wall" x="20" y="30" width="1160" height="490" rx="6"/>
+ <!-- tents -->
+ <rect class="tent" x="40" y="286" width="262" height="220" rx="8"/>
+ <text class="lbl big" x="72" y="306">Frame tent</text>${z("C",44,290)}
+ <rect class="tent" x="312" y="286" width="228" height="220" rx="8"/>
+ <text class="lbl big" x="344" y="306">Main assembly tent</text>${z("D",316,290)}
+ <rect class="tent" x="550" y="286" width="86" height="220" rx="8" style="opacity:.8"/>
+ <text class="lbl big" x="582" y="306">Parts</text>${z("A",554,290)}
+ ${tbl("t_cfinst",52,446,112,40,"Frame install")}
+ ${tbl("t_cfprep",178,446,112,40,"Frame prep table")}
+ ${tbl("t_rot",324,446,100,40,"Rotation table")}
+ ${tbl("t_lift",434,446,100,40,"Lift table")}
+ ${tbl("t_bench",558,446,70,40,"Work bench")}
+ <rect id="t_anodes" class="tbl" x="604" y="318" width="24" height="46" rx="3"/><text class="lbl" x="616" y="378" text-anchor="middle" style="font-size:10.5px">anodes</text>
+ <!-- racks -->
+ <rect class="tbl" x="650" y="444" width="180" height="56" rx="4" style="fill:none"/>
+ <line x1="740" y1="444" x2="740" y2="500" stroke="var(--tableline)" stroke-width="1.5"/>
+ <text class="lbl" x="695" y="516" text-anchor="middle">Untested rack</text><text class="lbl" x="785" y="516" text-anchor="middle">Tested rack</text>
+ ${z("E",654,412)}<text class="lbl big" x="684" y="430">Cantilever racks</text>
+ <!-- packed storage -->
+ <rect class="tbl" x="860" y="366" width="180" height="80" rx="4" style="fill:none;stroke-dasharray:5 4"/>
+ ${z("H",864,336)}<text class="lbl big" x="894" y="354">Packed CRU storage</text>
+ <!-- top band -->
+ ${tbl("t_desk",56,64,112,40,"")}<text class="lbl big" x="112" y="89" text-anchor="middle">Database</text>
+ ${tbl("t_cfstore",318,62,104,48,"")}<text class="lbl big" x="370" y="90" text-anchor="middle">Raw frames</text>${z("B",288,62)}
+ <rect id="t_pack" x="452" y="56" width="166" height="112" rx="6" fill="none" stroke="var(--tableline)" stroke-width="1.6" stroke-dasharray="6 5"/>
+ <text class="lbl big" x="535" y="80" text-anchor="middle">Packing area</text>${z("G",622,56)}
+ <rect class="tbl" x="760" y="56" width="38" height="130" rx="3"/><text class="lbl" transform="translate(784 121) rotate(-90)" text-anchor="middle">Packing materials</text>
+ <rect id="t_cb" class="tbl" x="994" y="70" width="160" height="80" rx="6" style="fill:var(--card)"/>
+ <text class="lbl big" x="1074" y="64" text-anchor="middle">Cold box</text>${z("F",962,70)}
+ <circle cx="1156" cy="200" r="15" fill="var(--card)" stroke="var(--tableline)" stroke-width="1.5"/><text class="lbl" x="1156" y="204" text-anchor="middle">LN</text>
+ <line x1="1156" y1="185" x2="1140" y2="150" stroke="var(--tableline)" stroke-width="2"/>
+ <text class="lbl" x="780" y="300" text-anchor="middle" style="font-size:11px;opacity:.8">walkway</text>
+ <g id="dyn"></g>
+ <rect class="nightveil" x="20" y="30" width="1160" height="490" rx="6"/>
+ <g id="top"></g>`;
+}
+/* ---------- render ---------- */
+let cur=0,timer=null;const FS=1.38;
+const plan=document.getElementById("plan");
+plan.innerHTML=mapBase();
+const dyn=document.getElementById("dyn"), topG=document.getElementById("top");
+// persistent slabs
+const slabG=document.createElementNS("http://www.w3.org/2000/svg","g");dyn.appendChild(slabG);
+const movesG=document.createElementNS("http://www.w3.org/2000/svg","g");dyn.appendChild(movesG);
+const peopleG=document.createElementNS("http://www.w3.org/2000/svg","g");dyn.appendChild(peopleG);
+OBJ.forEach(o=>{
+  const g=document.createElementNS("http://www.w3.org/2000/svg","g");g.setAttribute("class","slab");g.id="o_"+o.id;
+  if(o.fam==="F") g.innerHTML=`<rect x="-36" y="-11" width="72" height="22" rx="3" fill="none" stroke="#8A6D3B" stroke-width="3"/><text y="4" text-anchor="middle" fill="#8A6D3B">frame</text>`;
+  else {const f=FILL[o.fam][o.gen];const dark=o.gen<2;g.innerHTML=`<rect x="-34" y="-11" width="68" height="22" rx="3" fill="${f}" stroke="rgba(0,0,0,.35)"/><text y="4" text-anchor="middle" fill="${dark?'#fff':'#2A2233'}">CRU ${o.label}</text>`}
+  slabG.appendChild(g);
+});
+function render(){
+  const s=S[cur];
+  document.getElementById("when").textContent=`${s.day} ${s.half.toLowerCase()}, ${s.time}  ·  step ${s.k} of ${s.n}`.replace("  ·  "," | ");
+  document.getElementById("headline").textContent=HEAD[cur];
+  const active=T.filter(t=>t.a<=cur&&cur<=t.b);
+  const tot=active.reduce((a,t)=>a+t.p,0), hands=active.reduce((a,t)=>a+Math.floor(t.p),0), sb=active.filter(t=>t.p%1).length;
+  document.getElementById("cnt").textContent=+tot.toFixed(1);
+  document.getElementById("cntsub").textContent=`${tot===1?'person':'people'} on site`+(sb?`: ${hands} working, ${sb} on standby (a standby counts as ½)`:``);
+  plan.classList.toggle("night",s.half==="Evening");
+  // tables highlight
+  plan.querySelectorAll(".tbl.on").forEach(e=>{e.classList.remove("on");e.style.stroke=""});
+  // slabs
+  OBJ.forEach(o=>{const [x,y]=P[o.pos[cur]];const el=document.getElementById("o_"+o.id);el.setAttribute("transform",`translate(${x},${y})`);el.style.transform=`translate(${x}px,${y}px)`;el.style.opacity=o.pos[cur]==="off"?0:1});
+  // moves
+  const mv=MOVES.filter(m=>m[0]===cur);
+  movesG.innerHTML=mv.map(([_,id,f,t])=>{const o=OBJ.find(q=>q.id===id);const c=o.fam==="F"?"#8A6D3B":FILL[o.fam][Math.min(o.gen,1)];const [x1,y1]=P[f],[x2,y2]=P[t];const my=Math.min(y1,y2)-110;const mx=(x1+x2)/2;
+    return `<path class="mv" d="M${x1} ${y1-14} Q${mx} ${Math.max(my,40)} ${x2} ${y2-14}" stroke="${c}" marker-end="url(#ah_${o.fam})"/>`}).join("")+
+    `<defs>${["A","B","F"].map(f=>`<marker id="ah_${f}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${f==="F"?"#8A6D3B":FILL[f][1]}"/></marker>`).join("")}</defs>`;
+  // people, grouped by station
+  const byst={};active.forEach(t=>(byst[t.st]=byst[t.st]||[]).push(t));
+  let h="",tags="",tone=0;
+  Object.entries(byst).forEach(([st,ts])=>{
+    const [x0,y0]=ST[st].crew;let x=x0+12*FS;
+    const tb=document.getElementById(ST[st].tbl);
+    ts.forEach(t=>{
+      if(tb){tb.classList.add("on");tb.style.stroke=HC[t.p]==="#CCCCCC"?"#8C8C8C":HC[t.p]}
+      const n=Math.floor(t.p),startX=x;
+      for(let i=0;i<n;i++){h+=`<g class="fig">${person(x,y0,t.pose,false,TONES[tone++%5],FS)}</g>`;x+=24*FS}
+      if(t.p%1){x+=5;h+=`<g class="fig">${person(x,y0,"watch",true,null,FS)}</g>`;x+=24*FS}
+      const tx=(startX+x-24*FS)/2, c=HC[t.p];
+      tags+=`<g transform="translate(${tx},${y0-44*FS-14})"><rect x="-17" y="-10" width="34" height="19" rx="5" fill="${c}" stroke="rgba(0,0,0,.3)"/><text class="tagtxt" y="4" text-anchor="middle" fill="${HCDARK.has(t.p)?'#fff':'#1B2430'}">${t.p}</text></g>`;
+      x+=8;
+    });
+  });
+  peopleG.innerHTML=h; topG.innerHTML=tags;
+  // side list
+  const order=["cfinst","cfprep","rot","lift","bench","anodes","cfstore","crate","cb","desk"];
+  const L=active.slice().sort((a,b)=>order.indexOf(a.st)-order.indexOf(b.st)).map(t=>{const st=ST[t.st];const c=HC[t.p];
+    return `<div class="task"><span class="zl${st.zone?'':' desk'}" title="Zone ${st.zone||'office'}">${st.zone||'PC'}</span><div><div class="t">${t.name}</div>
+     <div class="m">${miniPeople(t.p,t.pose)}<span class="pill" style="background:${c};color:${HCDARK.has(t.p)?'#fff':'#1B2430'}">${t.p}</span><span>${words(t.p)}</span></div>
+     <div class="m" style="margin-top:2px">${st.name}</div></div></div>`}).join("");
+  const M=mv.length?`<div class="moves"><b>Moving:</b> ${mv.map(m=>m[4]).join("; ")}.</div>`:"";
+  document.getElementById("list").innerHTML=L+M;
+  // day buttons & timeline
+  document.querySelectorAll("#days button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.day===s.day));
+  document.querySelectorAll(".cell").forEach(c=>c.setAttribute("aria-current",+c.dataset.i===cur));
+}
+/* ---------- controls ---------- */
+const days=[...new Set(S.map(s=>s.day))];
+document.getElementById("days").innerHTML=days.map(d=>`<button data-day="${d}">${d}</button>`).join("");
+document.querySelectorAll("#days button").forEach(b=>b.onclick=()=>{stop();cur=S.findIndex(s=>s.day===b.dataset.day);render()});
+const go=d=>{cur=(cur+d+S.length)%S.length;render()};
+document.getElementById("prev").onclick=()=>{stop();go(-1)};
+document.getElementById("next").onclick=()=>{stop();go(1)};
+const playBtn=document.getElementById("play");
+function stop(){if(timer){clearInterval(timer);timer=null;playBtn.textContent="Play week"}}
+playBtn.onclick=()=>{if(timer){stop();return}playBtn.textContent="Pause";timer=setInterval(()=>go(1),3200)};
+document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;if(e.key==="ArrowRight"){stop();go(1)}if(e.key==="ArrowLeft"){stop();go(-1)}});
+// timeline
+const tl=document.getElementById("tl");
+tl.innerHTML=days.map(d=>{const halves=[...new Set(S.filter(s=>s.day===d).map(s=>s.half))];
+  return `<div class="tlday"><div class="dn">${d}</div><div class="tlhalfs">${halves.map(hf=>`<div class="tlhalf"><span class="hn">${hf}</span><div class="tlcells">${
+   S.map((s,i)=>({s,i})).filter(o=>o.s.day===d&&o.s.half===hf).map(({i})=>{const tot=T.filter(t=>t.a<=i&&i<=t.b).reduce((a,t)=>a+t.p,0);
+   return `<button class="cell" data-i="${i}" aria-label="${S[i].day} ${S[i].half} step ${S[i].k}: ${tot} people" title="${HEAD[i]}"><span class="bar" style="height:${tot/6*38}px"></span><span class="n">${+tot.toFixed(1)}</span></button>`}).join("")}</div></div>`).join("")}</div></div>`}).join("");
+document.querySelectorAll(".cell").forEach(c=>c.onclick=()=>{stop();cur=+c.dataset.i;render();document.getElementById("planwrap").scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:"start"})});
+// legend
+document.getElementById("legend").innerHTML=`
+ <span class="k"><svg viewBox="0 0 30 44">${person(15,44,"work",false,TONES[0])}</svg>Person working</span>
+ <span class="k"><svg viewBox="0 0 30 44">${person(15,44,"watch",true)}</svg>Standby nearby for safety, or checking in (counts as half a person)</span>
+ <span class="k"><span class="pill" style="background:${HC[2.5]}">2.5</span>Team size, same colors as the planning sheet</span>
+ <span class="k"><span class="swatch" style="background:${FILL.A[0]}"></span><span class="swatch" style="background:${FILL.A[1]}"></span><span class="swatch" style="background:${FILL.A[2]}"></span>CRU built this week, last week (′), two weeks ago (″)</span>`;
+// journey
+const J=[
+ {w:"Week 1",sub:"built",gen:0,stages:[["Mon","Anode stack built in the main tent",0],["Mon","Frame installed in the frame tent",2],["Mon","Edge cards and electronics added",4],["Tue","Warm electronics test",5],["Thu","Parked on the untested rack",19]]},
+ {w:"Week 2",sub:"cold tested",gen:1,stages:[["Mon","Loaded into the cold box",3],["Tue","Lid closed, warm test",6],["Wed","Box filled, cold test",15],["Wed","Evening boil-off and purge",17],["Thu","Second warm test",20],["Fri","Out to the tested rack",24]]},
+ {w:"Week 3",sub:"packed",gen:2,stages:[["Tue","Packed into its shipping crate",6],["Tue","Crate moved to packed storage",8]]}];
+document.getElementById("weeks").innerHTML=J.map(w=>`<div class="wk"><h3><span class="slabkey" style="background:${FILL.A[w.gen]};vertical-align:-1px;margin-right:6px"></span>${w.w}: CRU ${["A","A′","A″"][w.gen]} <small>${w.sub}</small></h3>${w.stages.map(([d,txt,i])=>`<button class="stagebtn" data-i="${i}"><span class="d">${d}</span>${txt}</button>`).join("")}</div>`).join("");
+document.querySelectorAll(".stagebtn").forEach(b=>b.onclick=()=>{stop();cur=+b.dataset.i;render();document.getElementById("planwrap").scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:"start"})});
+render();
+</script>
+</body>
+</html>
